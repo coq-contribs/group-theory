@@ -252,7 +252,6 @@ Lemma exp_l2 :
 Proof.
 intros a n; elim n; auto with v62.
 intro n0; elim n0; auto with v62.
-simpl in |- *; auto with v62.
 intros n1 H' H'0.
 rewrite (exp_l1 a n1); auto with v62.
 Qed.
