@@ -23,13 +23,13 @@ Require Import gr.
 Parameter U : Type.
 Parameter Gr : Group U.
 
-Let G : Ensemble U := G_ U Gr.
+Definition G : Ensemble U := G_ U Gr.
 
-Let star : U -> U -> U := star_ U Gr.
+Definition star : U -> U -> U := star_ U Gr.
 
-Let inv : U -> U := inv_ U Gr.
+Definition inv : U -> U := inv_ U Gr.
 
-Let e : U := e_ U Gr.
+Definition e : U := e_ U Gr.
 
 Definition G0' : forall a b : U, In U G a -> In U G b -> In U G (star a b) :=
   G0 U Gr.
