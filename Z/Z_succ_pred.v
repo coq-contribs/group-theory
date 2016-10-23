@@ -24,27 +24,27 @@ Definition predZ (x : Z) :=
   end.
 
 Lemma pred_succZ : forall x : Z, predZ (succZ x) = x.
-intro x; elim x; auto with v62.
-intro n; elim n; auto with v62.
+intro x; elim x; auto with arith.
+intro n; elim n; auto with arith.
 Qed.
 
 Lemma succ_predZ : forall x : Z, succZ (predZ x) = x.
-intro x; elim x; auto with v62.
-intro n; elim n; auto with v62.
+intro x; elim x; auto with arith.
+intro n; elim n; auto with arith.
 Qed.
 
 Lemma succ_pred_pred_succZ : forall x : Z, succZ (predZ x) = predZ (succZ x).
 intro x; try assumption.
-rewrite (pred_succZ x); rewrite (succ_predZ x); trivial with v62.
+rewrite (pred_succZ x); rewrite (succ_predZ x); trivial with arith.
 Qed.
 
 Lemma tech_pred_posZ : forall n : nat, 0 < n -> predZ (pos n) = pos (pred n).
-intro n; elim n; auto with v62.
-intro H'; elim (lt_n_O 0); auto with v62.
+intro n; elim n; auto with arith.
+intro H'; elim (lt_n_O 0); auto with arith.
 Qed.
 
 Lemma tech_succ_posOZ : forall n : nat, succZ (posOZ n) = pos n.
-intro n; elim n; auto with v62.
+intro n; elim n; auto with arith.
 Qed.
 
 

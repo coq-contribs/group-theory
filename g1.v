@@ -79,53 +79,53 @@ Variable sub : subgroup U H Gr.
 
 Lemma l1 : Included U (G_ U H) G.
 Proof.
-elim sub; auto with v62.
+elim sub; auto with sets.
 Qed.
 Hint Resolve l1.
 
 Lemma eH_in_G : In U G (e_ U H).
 Proof.
 elim sub.
-elim H; auto with v62.
+elim H; auto with sets.
 Qed.
 Hint Resolve eH_in_G.
 
 Lemma starH_is_star : star_ U H = star.
 Proof.
-elim sub; auto with v62.
+elim sub; auto with sets.
 Qed.
 Hint Resolve starH_is_star.
 
 Lemma eh_is_e : e_ U H = e.
 Proof.
 apply cancellation' with (a := e_ U H).
-rewrite <- starH_is_star; auto with v62.
+rewrite <- starH_is_star; auto with sets.
 Qed.
 Hint Resolve eh_is_e.
 
 Theorem invH_is_inv : forall a : U, In U (G_ U H) a -> inv_ U H a = inv a.
 Proof.
 intros a H'.
-apply resolve'; auto with v62.
+apply resolve'; auto with sets.
 rewrite <- starH_is_star.
 rewrite <- eh_is_e.
 generalize H'; clear H'.
-elim H; auto with v62.
+elim H; auto with sets.
 Qed.
 
 Theorem Subgroup_inhabited : Inhabited U (G_ U H).
 Proof.
-apply Inhabited_intro with (x := e_ U H); auto with v62.
+apply Inhabited_intro with (x := e_ U H); auto with sets.
 Qed.
 
 Theorem star_endo : endo_operation U (G_ U H) star.
 Proof.
-rewrite <- starH_is_star; auto with v62.
+rewrite <- starH_is_star; auto with sets.
 Qed.
 
 Theorem inv_endo : endo_function U (G_ U H) inv.
 Proof.
-red in |- *; intros a H'; rewrite <- (invH_is_inv a); auto with v62.
+red in |- *; intros a H'; rewrite <- (invH_is_inv a); auto with sets.
 Qed.
 
 End Elements.
@@ -142,7 +142,7 @@ Hint Resolve inhabited subset hstar hinv.
 
 Let assoc : associative U star.
 Proof.
-auto with v62.
+auto with sets.
 Qed.
 Hint Resolve assoc.
 
@@ -150,33 +150,33 @@ Let eH : U := star (inv witness) witness.
 
 Let eH_in_H : In U H eH.
 Proof.
-unfold eH at 1 in |- *; auto with v62.
+unfold eH at 1 in |- *; auto with sets.
 Qed.
 
 Let eH_left_neutral : left_neutral U star eH.
 Proof.
 unfold eH, left_neutral in |- *.
-rewrite (G3c' witness); auto with v62.
+rewrite (G3c' witness); auto with sets.
 Qed.
 
 Let eH_right_neutral : right_neutral U star eH.
 Proof.
 unfold eH, left_neutral in |- *.
-rewrite (G3c' witness); auto with v62.
+rewrite (G3c' witness); auto with sets.
 Qed.
 
 Let inv_left_inverse : left_inverse U star inv eH.
 Proof.
 unfold eH, left_inverse in |- *.
 intro x.
-rewrite (G3c' x); auto with v62.
+rewrite (G3c' x); auto with sets.
 Qed.
 
 Let inv_right_inverse : right_inverse U star inv eH.
 Proof.
 unfold eH, right_inverse in |- *.
 intro x.
-rewrite (G3b' x); auto with v62.
+rewrite (G3b' x); auto with sets.
 Qed.
 
 Let GrH : Group U :=
@@ -188,7 +188,7 @@ Theorem T_1_6_2 : Setsubgroup U H Gr.
 Proof.
 unfold Setsubgroup at 1 in |- *; simpl in |- *.
 exists GrH.
-unfold GrH in |- *; simpl in |- *; auto with v62.
+unfold GrH in |- *; simpl in |- *; auto with sets.
 Qed.
 
 End Premier.
@@ -214,9 +214,9 @@ Defined.
 
 Theorem exp_endo : forall (a : U) (n : Z), In U G a -> In U G (exp n a).
 Proof.
-intros a n; elim n; simpl in |- *; auto with v62.
-intro n0; elim n0; simpl in |- *; auto with v62.
-intro n0; elim n0; simpl in |- *; auto with v62.
+intros a n; elim n; simpl in |- *; auto with sets.
+intro n0; elim n0; simpl in |- *; auto with sets.
+intro n0; elim n0; simpl in |- *; auto with sets.
 Qed.
 Hint Resolve exp_endo.
 
@@ -224,14 +224,14 @@ Lemma exp_unfold_pos :
  forall (a : U) (n : nat),
  In U G a -> exp (pos (S n)) a = star a (exp (pos n) a).
 Proof.
-auto with v62.
+auto with sets.
 Qed.
 
 Lemma exp_unfold_neg :
  forall (a : U) (n : nat),
  In U G a -> exp (neg (S n)) a = star (inv a) (exp (neg n) a).
 Proof.
-auto with v62.
+auto with sets.
 Qed.
 
 Lemma exp_l1 :
@@ -239,30 +239,30 @@ Lemma exp_l1 :
  In U G a -> star a (exp (neg (S n)) a) = exp (neg n) a.
 Proof.
 intros a n H'; try assumption.
-rewrite (exp_unfold_neg a); trivial with v62.
-rewrite (inv_involution' a); trivial with v62.
+rewrite (exp_unfold_neg a); trivial with sets.
+rewrite (inv_involution' a); trivial with sets.
 cut (inv (inv (inv a)) = inv a).
-intro H'0; rewrite H'0; apply triv1'; auto with v62.
-rewrite <- (inv_involution' a); auto with v62.
+intro H'0; rewrite H'0; apply triv1'; auto with sets.
+rewrite <- (inv_involution' a); auto with sets.
 Qed.
 Hint Resolve exp_l1.
 
 Lemma exp_l2 :
  forall (a : U) (n : Z), In U G a -> star a (exp n a) = exp (succZ n) a.
 Proof.
-intros a n; elim n; auto with v62.
-intro n0; elim n0; auto with v62.
+intros a n; elim n; auto with sets.
+intro n0; elim n0; auto with sets.
 intros n1 H' H'0.
-rewrite (exp_l1 a n1); auto with v62.
+rewrite (exp_l1 a n1); auto with sets.
 Qed.
 
 Lemma exp_l2' :
  forall (a : U) (n : Z), In U G a -> star (inv a) (exp n a) = exp (predZ n) a.
 Proof.
-intros a n; elim n; auto with v62.
-intro n0; elim n0; auto with v62.
+intros a n; elim n; auto with sets.
+intro n0; elim n0; auto with sets.
 intros n1 H' H'0.
-rewrite (exp_unfold_pos a n1); trivial with v62.
+rewrite (exp_unfold_pos a n1); trivial with sets.
 Qed.
 Hint Resolve exp_l2 exp_l2' exp_unfold_pos exp_unfold_neg.
 Hint Immediate sym_eq.
@@ -271,24 +271,24 @@ Theorem add_exponents :
  forall (a : U) (m n : Z),
  In U G a -> star (exp m a) (exp n a) = exp (addZ m n) a.
 Proof.
-intros a m; elim m; auto with v62.
-intro n; elim n; auto with v62.
+intros a m; elim m; auto with sets.
+intro n; elim n; auto with sets.
 intros n0 H' n1 H'0.
 rewrite (tech_add_pos_succZ n0 n1).
-rewrite <- (exp_l2 a (addZ (pos n0) n1)); trivial with v62.
-rewrite (exp_unfold_pos a n0); trivial with v62.
-rewrite <- (H' n1); trivial with v62.
-auto with v62.
+rewrite <- (exp_l2 a (addZ (pos n0) n1)); trivial with sets.
+rewrite (exp_unfold_pos a n0); trivial with sets.
+rewrite <- (H' n1); trivial with sets.
+auto with sets.
 intro n; elim n.
 simpl in |- *.
 intros n0 H'.
-apply exp_l2'; auto with v62.
+apply exp_l2'; auto with sets.
 intros n0 H' n1 H'0.
 rewrite (tech_add_neg_predZ n0 n1).
-rewrite <- (exp_l2' a (addZ (neg n0) n1)); trivial with v62.
-rewrite <- (H' n1); trivial with v62.
-rewrite (exp_unfold_neg a n0); trivial with v62.
-auto with v62.
+rewrite <- (exp_l2' a (addZ (neg n0) n1)); trivial with sets.
+rewrite <- (H' n1); trivial with sets.
+rewrite (exp_unfold_neg a n0); trivial with sets.
+auto with sets.
 Qed.
 
 Lemma exp_commut1 :
@@ -296,48 +296,48 @@ Lemma exp_commut1 :
 Proof.
 intros a m H'.
 change (star (exp m a) (exp IZ a) = star (exp IZ a) (exp m a)) in |- *.
-rewrite (add_exponents a m IZ); trivial with v62.
-rewrite (add_exponents a IZ m); trivial with v62.
-rewrite (addZ_commutativity IZ m); trivial with v62.
+rewrite (add_exponents a m IZ); trivial with sets.
+rewrite (add_exponents a IZ m); trivial with sets.
+rewrite (addZ_commutativity IZ m); trivial with sets.
 Qed.
 
 Lemma tech_opp_pos_negZ1 : forall n : nat, oppZ (pos n) = neg n.
 Proof.
-intro n; elim n; auto with v62.
+intro n; elim n; auto with sets.
 Qed.
 
 Lemma tech_opp_pos_negZ2 : forall n : nat, oppZ (neg n) = pos n.
 Proof.
-intro n; elim n; auto with v62.
+intro n; elim n; auto with sets.
 Qed.
 
 Theorem change_exponent_sign :
  forall (a : U) (m : Z), In U G a -> inv (exp m a) = exp (oppZ m) a.
 Proof.
 intros a m; elim m.
-simpl in |- *; auto with v62.
-simpl in |- *; auto with v62.
-intro H'; symmetry  in |- *; auto with v62.
+simpl in |- *; auto with sets.
+simpl in |- *; auto with sets.
+intro H'; symmetry  in |- *; auto with sets.
 intros n H'.
 rewrite (tech_opp_pos_negZ1 n).
-elim n; auto with v62.
+elim n; auto with sets.
 intros n0 H'0.
-rewrite (exp_unfold_pos a n0); trivial with v62.
-rewrite (exp_unfold_neg a n0); trivial with v62.
-rewrite <- (exp_commut1 a (pos n0)); trivial with v62.
-rewrite <- (inv_star' (exp (pos n0) a) a); auto with v62.
-rewrite H'0; trivial with v62.
+rewrite (exp_unfold_pos a n0); trivial with sets.
+rewrite (exp_unfold_neg a n0); trivial with sets.
+rewrite <- (exp_commut1 a (pos n0)); trivial with sets.
+rewrite <- (inv_star' (exp (pos n0) a) a); auto with sets.
+rewrite H'0; trivial with sets.
 intros n H'.
 rewrite (tech_opp_pos_negZ2 n).
 elim n.
-simpl in |- *; symmetry  in |- *; auto with v62.
+simpl in |- *; symmetry  in |- *; auto with sets.
 intros n0 H'0.
-rewrite (exp_unfold_pos a n0); trivial with v62.
-rewrite (exp_unfold_neg a n0); trivial with v62.
-rewrite <- (exp_commut1 a (pos n0)); trivial with v62.
-rewrite <- (inv_star' (inv a) (exp (neg n0) a)); auto with v62.
-rewrite H'0; trivial with v62.
-rewrite <- (inv_involution' a); trivial with v62.
+rewrite (exp_unfold_pos a n0); trivial with sets.
+rewrite (exp_unfold_neg a n0); trivial with sets.
+rewrite <- (exp_commut1 a (pos n0)); trivial with sets.
+rewrite <- (inv_star' (inv a) (exp (neg n0) a)); auto with sets.
+rewrite H'0; trivial with sets.
+rewrite <- (inv_involution' a); trivial with sets.
 Qed.
 
 Inductive powers (a : U) : Ensemble U :=
@@ -348,23 +348,23 @@ Theorem powers_of_one_element :
 Proof.
 intros a H'.
 apply T_1_6_2 with (witness := a).
-apply In_powers with (m := IZ); auto with v62.
+apply In_powers with (m := IZ); auto with sets.
 red in |- *.
 intros x H'0; elim H'0.
-intros m x0 H'1; rewrite H'1; auto with v62.
+intros m x0 H'1; rewrite H'1; auto with sets.
 red in |- *.
 intros x y H'0; elim H'0.
 intros m x0 H'1 H'2; elim H'2.
 intros m0 x1 H'3; rewrite H'3.
 rewrite H'1.
-rewrite (add_exponents a m m0); trivial with v62.
-apply In_powers with (m := addZ m m0); trivial with v62.
+rewrite (add_exponents a m m0); trivial with sets.
+apply In_powers with (m := addZ m m0); trivial with sets.
 red in |- *.
 intros x H'0; elim H'0.
 intros m x0 H'1.
-apply In_powers with (m := oppZ m); trivial with v62.
+apply In_powers with (m := oppZ m); trivial with sets.
 rewrite H'1.
-apply change_exponent_sign; trivial with v62.
+apply change_exponent_sign; trivial with sets.
 Qed.
 
 Section Second.
@@ -381,11 +381,11 @@ Theorem T_1_6_3 : Setsubgroup U H Gr.
 Proof.
 cut (In U H eH).
 intro H'.
-apply T_1_6_2 with (witness := witness); auto with v62.
+apply T_1_6_2 with (witness := witness); auto with sets.
 red in |- *; intros a b H'0 H'1; try assumption.
 lapply (h2 eH b);
  [ intro H'4; lapply H'4; [ intro H'5; try exact H'5; clear H'4 | clear H'4 ]
- | idtac ]; auto with v62.
+ | idtac ]; auto with sets.
 unfold eH at 1 in H'5.
 generalize H'5; clear H'5.
 rewrite (G3b' witness).
@@ -394,67 +394,67 @@ intro H'4.
 lapply (h2 a (inv b));
  [ intro H'5; lapply H'5;
     [ intro H'6; generalize H'6; clear H'5 | clear H'5 ]
- | idtac ]; auto with v62.
-rewrite <- (inv_involution' b); auto with v62.
+ | idtac ]; auto with sets.
+rewrite <- (inv_involution' b); auto with sets.
 red in |- *; intros a H'0; try assumption.
 rewrite <- (G2b' (inv a)).
-apply h2; auto with v62.
+apply h2; auto with sets.
 unfold eH at 1 in H'.
-rewrite <- (G3b' witness); auto with v62.
-unfold eH at 1 in |- *; auto with v62.
+rewrite <- (G3b' witness); auto with sets.
+unfold eH at 1 in |- *; auto with sets.
 Qed.
 
 End Second.
 
 Theorem Ex1 : Setsubgroup U (Singleton U e) Gr.
 Proof.
-apply T_1_6_2 with (witness := e); auto with v62.
-red in |- *; intros x H'; elim H'; auto with v62.
+apply T_1_6_2 with (witness := e); auto with sets.
+red in |- *; intros x H'; elim H'; auto with sets.
 red in |- *; intros a b H' H'0.
 elim H'.
 elim H'0.
-rewrite (G2c' e); auto with v62.
+rewrite (G2c' e); auto with sets.
 red in |- *; intros a H'; elim H'.
-rewrite <- (resolve' e e); auto with v62.
+rewrite <- (resolve' e e); auto with sets.
 Qed.
 
 Theorem Ex2 : Setsubgroup U (Singleton U e) Gr.
 Proof.
-apply T_1_6_3 with (witness := e); auto with v62.
+apply T_1_6_3 with (witness := e); auto with sets.
 red in |- *.
-intros x H'; elim H'; auto with v62.
+intros x H'; elim H'; auto with sets.
 intros a b H'; elim H'.
 intro H'0; elim H'0.
-rewrite (G3b' e); auto with v62.
+rewrite (G3b' e); auto with sets.
 Qed.
 
 Lemma Ex3 : forall n : Z, exp n e = e.
 Proof.
-intro n; elim n; auto with v62.
-intro n0; elim n0; auto with v62.
+intro n; elim n; auto with sets.
+intro n0; elim n0; auto with sets.
 intros n1 H'.
-rewrite (exp_unfold_pos e n1); auto with v62.
-rewrite H'; auto with v62.
-intro n0; elim n0; auto with v62.
+rewrite (exp_unfold_pos e n1); auto with sets.
+rewrite H'; auto with sets.
+intro n0; elim n0; auto with sets.
 simpl in |- *.
-symmetry  in |- *; auto with v62.
+symmetry  in |- *; auto with sets.
 intros n1 H'.
-rewrite (exp_unfold_neg e n1); auto with v62.
-rewrite H'; auto with v62.
+rewrite (exp_unfold_neg e n1); auto with sets.
+rewrite H'; auto with sets.
 Qed.
 
 Lemma Ex4 : powers e = Singleton U e.
 Proof.
-apply Extensionality_Ensembles; split; red in |- *; auto with v62.
+apply Extensionality_Ensembles; split; red in |- *; auto with sets.
 intros x H'; elim H'.
 intros m x0 H'0; rewrite H'0.
-rewrite (Ex3 m); auto with v62.
+rewrite (Ex3 m); auto with sets.
 intros x H'; elim H'.
-apply In_powers with (m := IZ); auto with v62.
+apply In_powers with (m := IZ); auto with sets.
 Qed.
 
 Theorem Ex5 : Setsubgroup U (Singleton U e) Gr.
 Proof.
 rewrite <- Ex4.
-apply powers_of_one_element; auto with v62.
+apply powers_of_one_element; auto with sets.
 Qed.
