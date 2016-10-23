@@ -55,28 +55,28 @@ Hint Resolve G0.
 
 Theorem triv1 : forall a b : U, star (inv a) (star a b) = b.
 intros a b; try assumption.
-rewrite (G1 (inv a) a b); auto with v62.
-rewrite G3c; auto with v62.
+rewrite (G1 (inv a) a b); auto.
+rewrite G3c; auto.
 Qed.
 
 Theorem triv2 : forall a b : U, star (star b a) (inv a) = b.
 intros a b; try assumption.
-rewrite <- (G1 b a (inv a)); auto with v62.
-rewrite (G3b a); auto with v62.
+rewrite <- (G1 b a (inv a)); auto.
+rewrite (G3b a); auto.
 Qed.
 
 Theorem resolve : forall a b : U, star b a = e -> b = inv a.
 intros a b H'1.
 cut (star (star b a) (inv a) = inv a).
-rewrite <- (G1 b a (inv a)); auto with v62.
-rewrite (G3b a); auto with v62.
-rewrite (G2c b); auto with v62.
+rewrite <- (G1 b a (inv a)); auto.
+rewrite (G3b a); auto.
+rewrite (G2c b); auto.
 rewrite H'1.
-rewrite (G2b (inv a)); auto with v62.
+rewrite (G2b (inv a)); auto.
 Qed.
 
 Theorem self_inv : e = inv e.
-apply resolve; auto with v62.
+apply resolve; auto.
 Qed.
 
 Theorem inv_star : forall a b : U, star (inv b) (inv a) = inv (star a b).
@@ -85,20 +85,20 @@ apply resolve.
 rewrite <- (G1 (inv b) (inv a) (star a b)).
 rewrite (G1 (inv a) a b).
 rewrite (G3c a).
-rewrite (G2b b); auto with v62.
+rewrite (G2b b); auto.
 Qed.
 
 Theorem cancellation : forall a b : U, star a b = a -> b = e.
 intros a b H'.
 cut (star (inv a) (star a b) = b).
 rewrite H'.
-rewrite (G3c a); auto with v62.
+rewrite (G3c a); auto.
 rewrite (G1 (inv a) a b).
-rewrite (G3c a); auto with v62.
+rewrite (G3c a); auto.
 Qed.
 
 Theorem inv_involution : forall a : U, a = inv (inv a).
-intro a; apply resolve; auto with v62.
+intro a; apply resolve; auto.
 Qed.
 End group_trivialities.
 Hint Resolve G1.

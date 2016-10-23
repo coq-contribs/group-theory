@@ -98,9 +98,9 @@ Qed.
 
 Let opp_inv : forall x y : Z, x = oppZ y -> y = oppZ x.
 intros x y; elim y; simpl in |- *.
-intro H'; rewrite H'; auto with v62.
-intros n H'; rewrite H'; auto with v62.
-intros n H'; rewrite H'; auto with v62.
+intro H'; rewrite H'; auto with arith.
+intros n H'; rewrite H'; auto with arith.
+intros n H'; rewrite H'; auto with arith.
 Qed.
 
 Lemma le_opp_OZ2 :
@@ -110,7 +110,7 @@ rewrite (le_opp_OZ x y H H0 H1).
 cut (y = oppZ x).
 intro H'; rewrite H'.
 rewrite (le_opp_OZ x y H H0 H1); simpl in |- *; reflexivity.
-apply opp_inv; trivial with v62.
+apply opp_inv; trivial with arith.
 Qed.
 
 

@@ -47,7 +47,7 @@ Theorem sym_not_P :
  Symmetric U P -> ~ P x y -> ~ P y x.
  Proof.
 intros U P x y H' H'0; unfold not at 1 in |- *; intro H'1.
-apply H'0; apply H'; auto with v62.
+apply H'0; apply H'; auto.
 Qed.
 
 Theorem Equiv_from_order :
@@ -58,10 +58,10 @@ intros U R H'; red in |- *.
 elim H'; intros H'0 H'1; elim H'0; intros H'2 H'3; clear H' H'0.
 split; [ split; red in |- * | red in |- * ].
 intro x; split; try exact (H'2 x).
-intros x y H'; elim H'; intros H'0 H'4; clear H'; auto with v62.
+intros x y H'; elim H'; intros H'0 H'4; clear H'; auto.
 intros x y z H' H'0; elim H'0; intros H'4 H'5; clear H'0; elim H';
  intros H'6 H'7; clear H'.
 red in H'3.
-split; apply H'3 with y; auto with v62.
+split; apply H'3 with y; auto.
 Qed.
 Hint Resolve Equiv_from_order.
