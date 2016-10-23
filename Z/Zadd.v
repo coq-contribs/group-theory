@@ -34,39 +34,39 @@ Definition addZ (x1 x2 : Z) : Z :=
 
 Lemma addZ_eq1 : forall y : Z, addZ OZ y = y. 
 Proof.
- auto with v62.
+ auto with arith.
 Qed.
 
 Lemma addZ_eq2 : forall y : Z, addZ (pos 0) y = succZ y.
 Proof.
- auto with v62.
+ auto with arith.
 Qed.
 
 Lemma addZ_eq3 :
  forall (n1 : nat) (y : Z), addZ (pos (S n1)) y = succZ (addZ (pos n1) y).
 Proof.
- auto with v62.
+ auto with arith.
 Qed.
 
 Lemma addZ_eq4 : forall y : Z, addZ (neg 0) y = predZ y.
 Proof.
- auto with v62.
+ auto with arith.
 Qed.
 
 Lemma addZ_eq5 :
  forall (n1 : nat) (y : Z), addZ (neg (S n1)) y = predZ (addZ (neg n1) y).
 Proof.
- auto with v62.
+ auto with arith.
 Qed.
 
 
 
 Lemma succ_addZ_l : forall x y : Z, addZ (succZ x) y = succZ (addZ x y).
-intro x; elim x; auto with v62.
-intro n; elim n; auto with v62.
+intro x; elim x; auto with arith.
+intro n; elim n; auto with arith.
 simpl in |- *.
 intro y.
-rewrite succ_predZ; auto with v62.
+rewrite succ_predZ; auto with arith.
 intros; symmetry  in |- *; rewrite addZ_eq5.
 apply succ_predZ.
 Qed.
@@ -75,9 +75,9 @@ Lemma pred_addZ_l : forall x y : Z, addZ (predZ x) y = predZ (addZ x y).
 intros; elim x.
 reflexivity.
 simple destruct n.
-simpl in |- *; rewrite pred_succZ; trivial with v62.
-intros; rewrite addZ_eq3; rewrite pred_succZ; trivial with v62.
-trivial with v62.
+simpl in |- *; rewrite pred_succZ; trivial with arith.
+intros; rewrite addZ_eq3; rewrite pred_succZ; trivial with arith.
+trivial with arith.
 Qed.
 
 Lemma tech_add_pos_succZ :
@@ -175,16 +175,16 @@ Lemma tech_add_pos_neg_posZ :
 simple induction n2.
 intros; elim (addZ_commutativity (neg 0) (pos n1)).
 rewrite addZ_eq4.
-elim minus_n_Sm; trivial with v62.
+elim minus_n_Sm; trivial with arith.
 elim minus_n_O.
-apply tech_pred_posZ; trivial with v62.
+apply tech_pred_posZ; trivial with arith.
 intros; elim (addZ_commutativity (neg (S n)) (pos n1)).
 rewrite tech_add_neg_predZ.
 elim (addZ_commutativity (pos n1) (neg n)).
-rewrite H; auto with v62.
+rewrite H; auto with arith.
 elim (minus_n_Sm n1 (S n) H0).
 apply tech_pred_posZ.
-apply lt_minus2; trivial with v62.
+apply lt_minus2; trivial with arith.
 Qed.
 
 Definition associative (U : Set) (op : U -> U -> U) :=
@@ -268,11 +268,11 @@ intros; rewrite (tech_add_neg_predZ n0 (neg m)); rewrite H; reflexivity.
 Qed.
 
 Theorem abs_eq_or_oppZ : forall x : Z, {absZ x = x} + {absZ x = oppZ x}.
-simple destruct x; auto with v62.
+simple destruct x; auto with arith.
 Qed.
 
 Lemma tech_opp_pos_negZ :
  forall n : nat, oppZ (pos n) = neg n /\ oppZ (neg n) = pos n.
-simple induction n; auto with v62.
+simple induction n; auto with arith.
 Qed.
 

@@ -51,7 +51,7 @@ Variable H_Finite : Finite U H.
 
 Let h : forall x y : U, In U H x -> In U H y -> In U H (star x y).
 Proof.
-auto with v62.
+auto.
 Qed.
 Hint Resolve h.
 
@@ -60,33 +60,33 @@ Definition phi (a : U) (n : nat) : U := exp (pos n) a.
 Lemma phi_unfold :
  forall (a : U) (n : nat), In U G a -> phi a (S n) = star a (phi a n).
 Proof.
-unfold phi in |- *; auto with v62.
+unfold phi in |- *; auto.
 Qed.
 
 Lemma positive_powers :
  forall (a : U) (n : nat), In U H a -> In U H (phi a n).
 Proof.
-intros a n; elim n; auto with v62.
+intros a n; elim n; auto.
 intros n0 H' H'0.
-rewrite (phi_unfold a n0); auto with v62.
+rewrite (phi_unfold a n0); auto.
 Qed.
 
 Lemma tech_exp :
  forall (a : U) (n : nat), In U G a -> star (phi a n) a = phi a (S n).
 Proof.
-intros a n; elim n; auto with v62.
+intros a n; elim n; auto.
 intros n0 H' H'0.
-rewrite (phi_unfold a n0); auto with v62.
+rewrite (phi_unfold a n0); auto.
 rewrite <- (G1' a (phi a n0) a).
-rewrite H'; auto with v62.
+rewrite H'; auto.
 Qed.
 
 Lemma tech_exp' : forall n : nat, phi e n = e.
 Proof.
-intro n; elim n; auto with v62.
+intro n; elim n; auto.
 intros n0 H'.
-rewrite <- (tech_exp e n0); auto with v62.
-rewrite H'; auto with v62.
+rewrite <- (tech_exp e n0); auto.
+rewrite H'; auto.
 Qed.
 
 Lemma phi_exp :
@@ -95,8 +95,8 @@ Lemma phi_exp :
 Proof.
 unfold phi in |- *.
 intros a n m H'.
-rewrite (add_exponents a (pos n) (pos m)); trivial with v62.
-rewrite (tech_add_pos_posZ n m); trivial with v62.
+rewrite (add_exponents a (pos n) (pos m)); trivial.
+rewrite (tech_add_pos_posZ n m); trivial.
 Qed.
 
 Lemma powers_repeat :
@@ -106,9 +106,9 @@ Proof.
 intros a n m H' H'0.
 apply resolve'.
 apply cancellation' with (a := phi a n).
-rewrite (tech_exp a m); trivial with v62.
-rewrite (phi_exp a n (S m)); trivial with v62.
-rewrite <- (plus_n_Sm n m); auto with v62.
+rewrite (tech_exp a m); trivial.
+rewrite (phi_exp a n (S m)); trivial.
+rewrite <- (plus_n_Sm n m); auto.
 Qed.
 
 Definition psi := phi.
@@ -118,13 +118,13 @@ Proof.
 intros a H'; try assumption.
 apply Pigeonhole_bis with (A := Integers).
 exact Integers_infinite.
-apply Finite_downward_closed with (A := H); auto with v62.
+apply Finite_downward_closed with (A := H); auto.
 red in |- *.
 intros x H'0; elim H'0.
 intro x0.
 intros H'1 y H'2; rewrite H'2.
 unfold psi at 1 in |- *; simpl in |- *.
-apply positive_powers; auto with v62.
+apply positive_powers; auto.
 Qed.
 
 Theorem remaining :
@@ -134,7 +134,7 @@ Theorem remaining :
 Proof.
 intros a ainH.
 lapply (not_injective_elim nat U (psi a));
- [ intro H'2 | apply psi_not_inj; auto with v62 ].
+ [ intro H'2 | apply psi_not_inj; auto ].
 elim H'2; clear H'2.
 intros x H'.
 elim H'; clear H'.
@@ -142,7 +142,7 @@ intros x0 H'0; elim H'0; clear H'0.
 intros H'0 H'1.
 unfold psi in H'0; simpl in H'0.
 cut (x0 <> x).
-2: red in |- *; intro H'4; apply H'1; rewrite <- H'4; auto with v62.
+2: red in |- *; intro H'4; apply H'1; rewrite <- H'4; auto.
 intro H'.
 elim (nat_total_order x0 x).
 clear H'1 H'.
@@ -159,11 +159,11 @@ lapply (sym_eq (x:=phi a x0) (y:=star (phi a x0) a));
 lapply (cancellation' (phi a x0) a); [ intro H'8 | assumption ].
 rewrite H'8.
 rewrite (tech_exp' x0).
-rewrite (tech_exp' (S (S (x0 + 0)))); auto with v62.
-auto with v62.
+rewrite (tech_exp' (S (S (x0 + 0)))); auto.
+auto.
 elim H'1; intros r E; clear H'1.
 exists x0; exists r.
-rewrite <- E; auto with v62.
+rewrite <- E; auto.
 clear H'1 H'.
 intro H'.
 lapply (discrete_nat x x0); [ intro H'4 | assumption ].
@@ -176,34 +176,34 @@ intro H'3.
 lapply (cancellation' (phi a x) a); [ intro H'8 | rewrite <- H'3; auto ].
 rewrite H'8.
 rewrite (tech_exp' x).
-rewrite (tech_exp' (S (S (x + 0)))); auto with v62.
-auto with v62.
+rewrite (tech_exp' (S (S (x + 0)))); auto.
+auto.
 elim H'1; intros r E; clear H'1.
 exists x; exists r.
-rewrite <- E; auto with v62.
-auto with v62.
+rewrite <- E; auto.
+auto.
 Qed.
 
 Theorem T_1_6_4 : Setsubgroup U H Gr.
 Proof.
 elim H_inhabited.
 intros witness inH.
-apply T_1_6_2 with (witness := witness); trivial with v62.
+apply T_1_6_2 with (witness := witness); trivial.
 red in |- *.
 intros a H'.
 cut (exists n : nat, inv a = phi a n).
 intro H'0; elim H'0; intros n E; rewrite E; clear H'0.
-apply positive_powers; trivial with v62.
+apply positive_powers; trivial.
 cut (exists r : nat, ex (fun m : nat => phi a r = phi a (S (S (r + m))))).
 intro H'0; elim H'0; intros r E; elim E; intros m E0; try exact E0;
  clear E H'0.
 cut (inv a = phi a m).
 intro H'0; rewrite H'0.
-exists m; trivial with v62.
+exists m; trivial.
 symmetry  in |- *.
-apply powers_repeat with (n := r); trivial with v62.
-apply H_included_in_G; auto with v62.
-apply remaining; auto with v62.
+apply powers_repeat with (n := r); trivial.
+apply H_included_in_G; auto.
+apply remaining; auto.
 Qed.
 
 End Cinq.
